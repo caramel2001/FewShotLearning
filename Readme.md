@@ -32,3 +32,19 @@ This has 2 major benefits,
 
 A valid question is how to build a classifier from output. A simple solution would be to keep representative images for every training class on hand, allowing us to quickly form pairs with a given training image before feeding it into our network. If our network is trained well, the pair with the highest similarity score would the pair form the same class!
 We implemented the idea outlined above and this report will go through the process step by step highlighting the successes and key learnings in detail.
+
+## Conclusion and Discussion
+
+Although few-shot learning is a promising direction for future research, more work is needed to improve its effectiveness. In particular, more research is needed on how to effectively select and use training data, how to design better models, and how to better exploit prior knowledge.
+The main aim of our project was to develop a model to perform image classification with a very small amount of training data. We achieved this by leveraging pre-trained models, transfer learning and creating clever architectures. We started by benchmarking the performance of transfer learning by pretraining on a large dataset and then fine tuning on our smaller flower dataset. We found the BiT models performed the best.
+We then explored the use of Siamese Networks for Few Shot Learning. This architecture allowed us to generate encodings for images. We built a model and trained it to produce similar encodings for images from the same class, and different encodings for images from different classes. We validated the model using the N-Way Few Shot Learning task, and found it performed reasonably well.
+We then explored the use of the Triplet Loss function to further improve the encodings generated. We used semi-hard triplet sampling to train our model, and found the encodings to be greatly improved. We built a classifier using the embeddings (in essence performing a 102-way few shot learning task) and found that the model performed exceptionally well, reaching a classification accuracy of 98.8%.
+10
+We were quite pleased with the performance of the model. However, there are several areas of improvement that we would like to work on in the future.
+
+1. More Training Data for creating Embeddings
+   One of the most significant improvements we could make to the model would be to increase the number of training samples for generating the embeddings. Here, we used the 1020 images in the train dataset to train the model using triplet loss. Ideally, a much larger dataset should be used to train this deep network.
+   Once the model is trained on a variety of flower images, we could use it to learn new flower encodings from another dataset and predict on the test set. This would require relatively few training images of these new flowers.
+
+2. Model Architecture
+   We could also try alternative model architecture for few-shot learning. For instance, the models we implemented were from papers published in 2016. Since then a variety of novel architectures have been developed to tackle this few-shot learning problem. A particularly interesting paper utilized GANs to generate images for the triplet loss, leading to higher quality embeddings of the anchor.
